@@ -91,6 +91,8 @@ with app.app_context():
 ##################################################
 #                Login Management                #
 ##################################################
+
+
 @app.route("/login", methods=["GET", "POST"])
 def login():
     if request.method == "GET":
@@ -118,7 +120,8 @@ def register():
         return render_template("register.html")
     elif request.method == "POST":
         # Make new user using data in request.form
-        new_user = User(request.form["username"],request.form["name"], request.form["password"],"user")
+        new_user = User(
+            request.form["username"], request.form["name"], request.form["password"], "user")
         db.session.add(new_user)
         db.session.commit()
         login_user(new_user, remember=True)
@@ -131,7 +134,7 @@ def logout():
     logout_user()
     return redirect(url_for("login"))
 
-    
+
 ####################################################
 #              Main route definitions              #
 ####################################################
@@ -139,6 +142,7 @@ def logout():
 @app.route("/favicon.ico")
 def favicon():
     return redirect(url_for("static", filename="favicon.ico"))
+
 
 @app.route("/")
 def home():
@@ -150,8 +154,9 @@ def home():
         return render_template("home.html", user=current_user)
 
 
-
-
+@app.route("/aboutUs")
+def about():
+    return render_template("aboutUs.html")
 
 
 if __name__ == "__main__":

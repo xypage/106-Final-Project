@@ -6,17 +6,26 @@ Register
 <link rel="stylesheet" href="static/css/form.css" />
 {% endblock %}
 {% block body %}
-<h1>Register</h1>
+<div class="square">
+<h1 class="register">Register</h1>
 <div class="form-wrapper">
 	<form method="post" class="form">
-        <label for="name">Name:</label>
-        <input type="text" name="name" id="name">
-        <label for="username">Username:</label>
-        <input type="text" name="username" id="username">
-        <label for="password">Password:</label>
-        <input type="password" name="password" id="password">
-		<input type="submit" value="Register" id="submit" />
+        <!-- <label for="name">Name:</label> -->
+        <input type="text" name="name" id="name" placeholder="Name">
+        <br>
+        <!-- <label for="username">Username:</label> -->
+        <input type="text" name="username" id="username" placeholder="Username">
+        <br>
+        <!-- <label for="password">Password:</label> -->
+        <input type="password" name="password" id="password" placeholder="Password">
+		<input type="submit" value="Register" id="submit"/>
 	</form>
+</div>
+<br/>
+<br/>
+<p>
+Already have an account? <a href="/login">Login</a>
+</p>
 </div>
 {% endblock %}
 {% block js %}

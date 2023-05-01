@@ -7,22 +7,20 @@
         <title>HOME Page</title>
         <!-- <link rel = "stylesheet" href="/static/style.css"> -->
         <script src="https://kit.fontawesome.com/8e1cac8c45.js" crossorigin="anonymous"></script>
-        <link rel = "stylesheet" href="style.css">
+        <link
+            rel="stylesheet"
+            type="text/css"
+            href="{{ url_for('static',filename='css/eventStyle.css') }}"
+        />
        
     </head>
     <body>
         <!-- <p >HOME</p> -->
 
-        <div class="header">
-            <div class="front">
-                <p>PROILE:NAME</p>
-                
-            </div>
-            
-            
+        <div class="header"> 
             <div class="sidenav">
                 <a href="#" class ="logo">
-                    <img src = "logo1.jpeg" class = logo-img>
+                    <img src= "{{ url_for('static', filename='image/logo1.jpeg') }}" alt ="logo" class="logo-img">
                     <div class="headers">
                         <h1>TIGHT RIDES</h1>
                     </div>
@@ -37,6 +35,15 @@
                     <li><a href="#"><i class="fa-solid fa-right-from-bracket"></i><p>Signout</p></a></li>
                     <div class = "active"></div>
                 </ul>
+            </div>
+
+            <div class="front">
+                <p>ABOUT US</p>
+                <div class="infoAboutUs">
+                    <p >We are a collective car community app who hopes to being everyone together 
+                </p> 
+                </div>
+                  
             </div>
 
         </div>
