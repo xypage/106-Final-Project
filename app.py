@@ -5,7 +5,8 @@
 from sys import stdout
 from flask_admin.contrib.sqla import ModelView
 from flask_admin import Admin
-from flask import Flask, render_template, request, url_for, redirect, session
+from flask import Flask, render_template, request, url_for, redirect, session, jsonify, render_template_string
+from datetime import datetime
 
 # Database
 from flask_sqlalchemy import SQLAlchemy
@@ -63,6 +64,13 @@ app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 db = SQLAlchemy(app)
 
 
+# Association table for who the user is following
+follows = db.Table(
+    'follows',
+    db.Column('follower_id', db.Integer, db.ForeignKey('user.id'), primary_key=True),
+    db.Column('followed_id', db.Integer, db.ForeignKey('user.id'), primary_key=True)
+)
+
 class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String, unique=True, nullable=False)
@@ -72,6 +80,14 @@ class User(db.Model, UserMixin):
     role = db.Column(db.String, nullable=False)
     # Password is the hashed version of the user's password
     password = db.Column(db.String, nullable=False)
+    # Posts is a list of all the posts the user has made
+    posts = db.relationship('Post', backref='user')
+    # Follows is a list of all the users the user is following
+    followed = db.relationship(
+        'User', secondary=follows,
+        primaryjoin=(follows.c.follower_id==id),
+        secondaryjoin=(follows.c.followed_id==id),
+        backref=db.backref('followers', lazy='dynamic'), lazy='dynamic')
 
     def __init__(self, username, name, password, role):
         self.username = username
@@ -84,9 +100,63 @@ class User(db.Model, UserMixin):
         return bcrypt.check_password_hash(self.password, password)
 
 
+class Post(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    # user_id is the id of the user who made the post (foreign key)
+    content = db.Column(db.String, nullable=False)
+    # content is the content of the post
+    timestamp = db.Column(db.DateTime, nullable=False)
+    # timestamp is the time the post was made
+    privacy_setting = db.Column(db.String, nullable=False)
+    # privacy_setting is the privacy setting of the post
+
 with app.app_context():
     db.drop_all()
     db.create_all()
+
+##################################################
+#         Post Management (User View)            #
+##################################################
+
+@app.route("/new_post", methods=["GET", "POST"])
+@login_required
+def new_post():
+    # Get the post data from the form
+    print("in new post route")
+    content = request.form["content"]
+
+    # Create a new post object
+    new_post = Post(
+        user_id=current_user.id,
+        content=content,
+        timestamp=datetime.now(),
+        privacy_setting="public"
+    )
+    db.session.add(new_post)
+    db.session.commit()
+
+    # Render the new post HTML and return it
+    post_html = render_template_string('<div> class="post"><p>{{ content}}</p><p>{{ timestamp }}</p></div>', content=content, timestamp=new_post.timestamp)
+    return jsonify(post_html)
+
+@app.route('/get_all_posts', methods=["GET"])
+@login_required
+def get_all_posts():
+    all_posts = Post.query.order_by(Post.timestamp.desc()).all()
+    posts_data = []
+
+    for post in all_posts:
+        user = User.query.filter_by(id=post.user_id).first()
+        post_data = {
+            "content": post.content,
+            "timestamp": post.timestamp,
+            "username": user.username,
+            "name": user.name,
+        }
+        posts_data.append(post_data)
+
+    return jsonify(posts_data)
 
 ##################################################
 #                Login Management                #

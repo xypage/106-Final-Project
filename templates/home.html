@@ -3,11 +3,35 @@
 Home
 {% endblock %}
 {% block css %}
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"
+    integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
 <link rel="stylesheet" href="static/css/home.css" />
 {% endblock %}
 {% block body %}
 
 Hello, {{ user.name }}.
+<br>
+<br>
+<!-- button or link to log out -->
+<button id="logout">Logout</button>
+<a href="/logout">Logout</a>
+<br>
+<br>
+<br>
+
+<form id="new_post_form">
+    <textarea id="post-content" name="content" rows="4" cols="50" placeholder="Enter your post here..."></textarea>
+    <input type="submit" value="Submit">
+</form>
+
+<!-- div for list of people who we can follow -->
+<div id="user_list"></div>
+<!-- div for list of people who we are following -->
+<div id="following_list"></div>
+
+<div id="user_feed"></div>
+
+<script src="{{url_for('static', filename='/home.js')}}"></script>
 
 {% endblock %}
 
