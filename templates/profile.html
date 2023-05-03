@@ -7,8 +7,11 @@
         <title>HOME Page</title>
         <!-- <link rel = "stylesheet" href="/static/style.css"> -->
         <script src="https://kit.fontawesome.com/8e1cac8c45.js" crossorigin="anonymous"></script>
-        <link rel = "stylesheet" href="static/css/style.css">
-       
+         <link
+            rel="stylesheet"
+            type="text/css"
+            href="{{ url_for('static',filename='css/eventStyle.css') }}"
+        />
     </head>
     <body>
         <!-- <p >HOME</p> -->
@@ -22,7 +25,7 @@
             
             <div class="sidenav">
                 <a href="#" class ="logo">
-                    <img src = "logo1.jpeg" class = logo-img>
+                    <img src= "{{ url_for('static', filename='image/logo1.jpeg') }}" alt ="logo" class="logo-img">
                     <div class="headers">
                         <h1>TIGHT RIDES</h1>
                     </div>
