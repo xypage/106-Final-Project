@@ -300,5 +300,16 @@ def about():
     return render_template("aboutUs.html")
 
 
+@app.route("/events")
+def events():
+    return render_template("events.html")
+
+
+@app.route("/profile")
+def profile():
+    return render_template("profile.html")
+
+
+
 if __name__ == "__main__":
     app.run(debug=True)
