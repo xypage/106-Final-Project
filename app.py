@@ -140,6 +140,7 @@ def new_post():
     post_html = render_template_string('<div> class="post"><p>{{ content}}</p><p>{{ timestamp }}</p></div>', content=content, timestamp=new_post.timestamp)
     return jsonify(post_html)
 
+# endpoint to get all posts from the database (global feed)
 @app.route('/get_all_posts', methods=["GET"])
 @login_required
 def get_all_posts():
@@ -157,6 +158,26 @@ def get_all_posts():
         posts_data.append(post_data)
 
     return jsonify(posts_data)
+
+# endpoint to get the posts of who the user is following (following feed)
+@app.route('/get_following_posts', methods=["GET"])
+@login_required
+def get_following_posts():
+    # get the unique ids of the people the current user is following
+    following_ids = [user.id for user in current_user.followed]
+    # get all the posts form the following ids
+    following_posts = Post.query.filter(Post.user_id.in_(following_ids)).order_by(Post.timestamp.desc()).all()
+    post_list = []
+    for post in following_posts:
+        user = User.query.filter_by(id=post.user_id).first()
+        post_data ={
+            "content": post.content,
+            "timestamp": post.timestamp,
+            "username": user.username,
+            "name": user.name,
+        }
+        post_list.append(post_data)
+    return jsonify(post_list)
 
 
 ##################################################
