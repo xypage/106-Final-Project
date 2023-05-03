@@ -158,6 +158,56 @@ def get_all_posts():
 
     return jsonify(posts_data)
 
+
+##################################################
+#         Follow Management (User View)          #
+##################################################
+
+# route to get list of users that the current user is not following
+@app.route('/get_unfollowed_users', methods=["GET"])
+@login_required
+def get_unfollowed_users():
+    followed_user_ids = [user.id for user in current_user.followed]
+    unfollowed_users = User.query.filter(User.id.notin_(followed_user_ids + [current_user.id])).all()
+    user_data = [{"id": user.id, "username": user.username, "name": user.name} for user in unfollowed_users]
+    return jsonify(user_data)
+
+# route for follow request
+@app.route('/follow_user/<int:user_id>', methods=["POST"])
+@login_required
+def follow_user(user_id):
+    user_to_follow = User.query.get(user_id)
+    # check to make sure user exists
+    if user_to_follow is not None:
+        current_user.followed.append(user_to_follow)
+        db.session.commit()
+        return "Successfully followed user", 200
+    return "User to unfollow is not found", 404
+
+# route to get list of users that that the current user is following
+@app.route('/get_followed_users', methods=["GET"])
+@login_required
+def get_followed_users():
+    followed_users_id = [user.id for user in current_user.followed]
+    followed_users = User.query.filter(User.id.in_(followed_users_id)).all()
+    user_data = [{"id": user.id, "username": user.username, "name": user.name} for user in followed_users]
+    return jsonify(user_data)
+    
+
+#route for unfollow request
+@app.route('/unfollow_user/<int:user_id>', methods=["POST"])
+@login_required
+def unfollow_user(user_id):
+    user_to_unfollow = User.query.get(user_id)
+    # check to make sure user exists
+    if user_to_unfollow is not None:
+        # remove the user to be unfollowed from the association table
+        current_user.followed.remove(user_to_unfollow)
+        # update database
+        db.session.commit()
+        return "Successfully unfollowed user", 200
+    return "User to unfollow is not found", 404
+
 ##################################################
 #                Login Management                #
 ##################################################
