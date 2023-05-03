@@ -112,7 +112,7 @@ class Post(db.Model):
     # privacy_setting is the privacy setting of the post
 
 with app.app_context():
-    db.drop_all()
+    # db.drop_all()
     db.create_all()
 
 ##################################################
@@ -289,8 +289,6 @@ def favicon():
 def home():
     if not current_user.is_authenticated:
         return redirect(url_for("login"))
-    elif current_user.role == "admin":
-        return redirect("/admin")
     else:
         return render_template("home.html", user=current_user)
 
@@ -304,12 +302,31 @@ def about():
 def events():
     return render_template("events.html")
 
+@app.route("/user/<string:username>")
+def user_profile(username):
+    user_id = User.query.filter_by(username=username).first().id
+    # get all the posts from this user
+    users_posts = Post.query.filter_by(user_id=user_id).order_by(Post.timestamp.desc()).all()
+    post_list = []
+    for post in users_posts:
+        user = User.query.filter_by(id=post.user_id).first()
+        post_data ={
+            "content": post.content,
+            "timestamp": post.timestamp
+        }
+        post_list.append(post_data)
 
-@app.route("/profile")
-def profile():
-    return render_template("profile.html")
+    return render_template("test_profile.html", post_list=post_list)
+
+    # Make sure they're authenticated first so you don't try to access anon user's username
+    # if current_user.is_authenticated and current_user.username == username:
+        # return "Your profile " + username
+    # else:
+        # return username + "'s profile"
 
 
 
 if __name__ == "__main__":
     app.run(debug=True)
+
+    
