@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+{% block subtitle %}
+Home
+{% endblock %}
+{% block css %}
+<!DOCTYPE html>
+<html>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"
+    integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
+        <link
+            rel="stylesheet"
+            type="text/css"
+            href="{{ url_for('static',filename='css/eventStyle.css') }}"
+        />
+{% endblock %}
+{% block body %}
+
+<div class="header"> 
+
+    <div class="sidenav">
+        <a href="#" class ="logo">
+            <img src= "{{ url_for('static', filename='image/logo1.jpeg') }}" alt ="logo" class="logo-img">
+                <div class="headers">
+                    <h1>TIGHT RIDES</h1>
+                </div>
+                    
+                    
+        </a>
+            <ul class = "navs">
+                <li><a href="/"><i class="fa-solid fa-house"></i></i></i><p>Home</p></a></li>
+                <li><a href="/events"><i class="fa-solid fa-map-location-dot"></i><p>Events</p></a></li>
+                <li><a href="/profile"><i class="fa-solid fa-user"></i><p>Profile</p></a></li>
+                <li><a href="/aboutUs"><i class="fa-solid fa-sitemap"></i><p>About Us</p></a></li>
+                <li><a href="/logout"><i class="fa-solid fa-right-from-bracket"></i><p>Signout</p></a></li>
+                <div class = "active"></div>
+            </ul>
+    </div>
+            <div class="front">
+                <p>Hello, {{ user.name }}</p>
+
+                <div class="newPost"> 
+                    <form id="new_post_form">
+                    <textarea id="post-content" name="content" rows="4" cols="50" placeholder="Enter your post here..."></textarea>
+                <input type="submit" value="Submit"> </form>
+
+                </div>
+
+                <div id="user_list"></div>
+                    <br>
+                    <br>
+                    <br>
+            <!-- div for list of people who we are following -->
+                <div id="following_list"></div>
+                <br>
+                <br>
+                <br>
+                <button id="personal_feed">Personal Feed</button>
+                <button id="global_feed">Global Feed</button>
+                <div id="user_feed"></div>
+
+                <script src="{{url_for('static', filename='/home.js')}}"></script>
+            </div>
+
+        </div>
+<br>
+<br>
+</html>
+
+<!-- <script src="{{url_for('static', filename='/home.js')}}"></script> -->
+
+{% endblock %}
+
