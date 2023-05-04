@@ -10,6 +10,11 @@ Home
             type="text/css"
             href="{{ url_for('static',filename='css/eventStyle.css') }}"
         />
+        <link
+            rel="stylesheet"
+            type="text/css"
+            href="{{ url_for('static',filename='css/home.css') }}"
+        />
 {% endblock %}
 {% block body %}
 
@@ -34,7 +39,7 @@ Home
             </ul>
     </div>
             <div class="front">
-                <p>Hello, {{ user.name }}</p>
+                <!-- <p>Hello, {{ user.name }}</p> -->
 
                 <div class="newPost"> 
                     <form id="new_post_form">
@@ -43,17 +48,18 @@ Home
 
                 </div>
 
-                <div id="user_list"></div>
+                <!-- <div id="user_list"></div> -->
+                    <!-- <br>
                     <br>
-                    <br>
-                    <br>
-            <!-- div for list of people who we are following -->
-                <div id="following_list"></div>
+                    <br> -->
+                <!-- div for list of people who we are following -->
+                <!-- <div id="following_list"></div> -->
+                <!-- <br>
                 <br>
-                <br>
-                <br>
-                <button id="personal_feed">Personal Feed</button>
-                <button id="global_feed">Global Feed</button>
+                <br> -->
+                <button id="personal_feed" class="button-74" role="button">Personal Feed</button>
+                <!-- <button id="personal_feed">Personal Feed</button>  -->
+                <button id="global_feed" class="button-74" role="button">Global Feed</button>
                 <div id="user_feed">
                     <h3 id="feed_label"></h3>
                     <div id="feed_contents"></div>
