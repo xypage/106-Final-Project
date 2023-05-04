@@ -54,9 +54,10 @@ Home
                 <br>
                 <button id="personal_feed">Personal Feed</button>
                 <button id="global_feed">Global Feed</button>
-                <div id="user_feed"></div>
-
-            <script src="{{url_for('static', filename='/home.js')}}"></script>
+                <div id="user_feed">
+                    <h3 id="feed_label"></h3>
+                    <div id="feed_contents"></div>
+                </div>
             </div>
 
         </div>

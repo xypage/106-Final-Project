@@ -20,13 +20,13 @@ $(document).ready(function() {
         xhttp.onload = function() {
             if (this.status == 200) {
                 if (globalFeed == true){
-
                     // If succesful, append the new post to the page
-                    var post = document.createElement("div");
-                    post.classList.add("post");
                     var post_html = JSON.parse(this.responseText);
-                    post.innerHTML = post_html;
-                    document.getElementById('user_feed').appendChild(post);
+                    let user_feed = document.getElementById('feed_contents');
+                    // insertAdjacent("afterbegin", ...) inserts an element in front of the 
+                    // current first child using the string passed as the html
+                    user_feed.insertAdjacentHTML("afterbegin", post_html);
+                    
                     // Clear the form for new post entry
                     document.getElementById("new_post_form").reset();
                 }
@@ -43,12 +43,14 @@ $(document).ready(function() {
 
     $("#personal_feed").on('click', function() {
         console.log("personal_feed button was pressed");
+        clear_posts();
         load_following_posts();
         globalFeed = false;
     });
 
     $("#global_feed").on('click', function() {
         console.log("global_feed button was pressed");
+        clear_posts();
         load_all_posts();
         globalFeed = true;
     });
@@ -56,7 +58,10 @@ $(document).ready(function() {
 
 });
 
-
+// function to clear posts currently in the feed before loading new ones
+function clear_posts() {
+    document.getElementById("feed_contents").innerHTML = "";
+}
 
 // function to load all posts (aka global feed)
 function load_all_posts() {
@@ -66,8 +71,8 @@ function load_all_posts() {
     xhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200){
             var data = JSON.parse(this.responseText);
-            var user_feed = document.getElementById("user_feed");
-            user_feed.innerHTML = "<h3>Global Feed</h3>";
+            document.getElementById("feed_label").innerText = "Global Feed";
+            var user_feed = document.getElementById("feed_contents");
             // iterate through each post and append to the page
             for (var i = 0; i < data.length; i++){
                 var post = document.createElement("div");
@@ -94,8 +99,8 @@ function load_following_posts() {
     xhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200){
             var data = JSON.parse(this.responseText);
-            var user_feed = document.getElementById("user_feed");
-            user_feed.innerHTML = "<h3>Personal Feed</h3>";
+            document.getElementById("feed_label").innerText = "Personal Feed";
+            var user_feed = document.getElementById("feed_contents");
 
             for (var i = 0; i < data.length; i++){
                 var post = document.createElement("div");
