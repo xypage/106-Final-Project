@@ -1,36 +1,102 @@
-{% extends "base.html" %}
-{% block subtitle %}
-Home
-{% endblock %}
-{% block css %}
-        <link
-            rel="stylesheet"
-            type="text/css"
-            href="{{ url_for('static',filename='css/universal.css') }}"
-        />
-        <link
-            rel="stylesheet"
-            type="text/css"
-            href="{{ url_for('static',filename='css/test_profile.css') }}"
-        />
-{% endblock %}
-{% block body %}
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta http-equiv="X-UA=compatible" content="IE=edge" />
+		<title>{{name}}'s Profile</title>
+		<!-- <link rel = "stylesheet" href="/static/style.css"> -->
+		<script
+			src="https://code.jquery.com/jquery-3.6.4.min.js"
+			integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8="
+			crossorigin="anonymous"
+		></script>
 
-
-{% for post in post_list %}
-    <div class="post-container">
-        <div class="post-content">
-            <p>
-                {{ post.content }}
-            </p>
-        </div>
-        <div class="timestamp">
-            <p>
-                Posted: {{ post.timestamp }}
-            </p>
-        </div>
-    </div>
-{% endfor %}
-
-{% endblock %}
-
+		<script
+			src="https://kit.fontawesome.com/8e1cac8c45.js"
+			crossorigin="anonymous"
+		></script>
+		<link
+			rel="stylesheet"
+			type="text/css"
+			href="{{ url_for('static',filename='css/test_profile.css') }}"
+		/>
+	</head>
+	<body>
+		<div class="header">
+			<div class="sidenav">
+				<a href="#" class="logo">
+					<img
+						src="{{ url_for('static', filename='image/logo1.jpeg') }}"
+						alt="logo"
+						class="logo-img"
+					/>
+					<div class="headers">
+						<h1>TIGHT RIDES</h1>
+					</div>
+				</a>
+				<ul class="navs">
+					<li>
+						<a href="/"
+							><i class="fa-solid fa-house"></i>
+							<p>Home</p></a
+						>
+					</li>
+					<li>
+						<a href="/events"
+							><i class="fa-solid fa-map-location-dot"></i>
+							<p>Events</p></a
+						>
+					</li>
+					<li>
+						<a href="/profile"
+							><i class="fa-solid fa-user"></i>
+							<p>Profile</p></a
+						>
+					</li>
+					<li>
+						<a href="/aboutUs"
+							><i class="fa-solid fa-sitemap"></i>
+							<p>About Us</p></a
+						>
+					</li>
+					<li>
+						<a href="/logout"
+							><i class="fa-solid fa-right-from-bracket"></i>
+							<p>Signout</p></a
+						>
+					</li>
+					<div class="active"></div>
+				</ul>
+			</div>
+		</div>
+		<div class="main-content">
+            <div class="user-info-container">
+                <p id="current_user_name">Profile: {{ user.name }}</p>
+                <p class="bio">{{ bio }}</p>
+                {% if not is_user and not user.followed %} 
+                    <button id="follow_button">Follow {{ user.name }}</button>
+                    <button id="unfollow_button" class="hidden">Unollow {{ user.name }}</button>
+                {% elif not is_user %}
+                    <button id="follow_button" class="hidden">Follow {{ user.name }}</button>
+                    <button id="unfollow_button">Unollow {{ user.name }}</button>
+                {% endif %}
+            </div>
+			{% for post in post_list %}
+			<div class="post">
+				<div class="headerContainer">
+					<a href="/user/{{ user.username }}" class="name"
+						>{{ user.name }} ({{ user.username }})
+					</a>
+					<p class="timestamp">{{ post.timestamp }}</p>
+				</div>
+				<div class="content">{{ post.content }}</div>
+			</div>
+			{% endfor %}
+		</div>
+	</body>
+    <script type="text/javascript">
+        var user = {{ user|tojson }};
+    </script>
+    <script src="{{ url_for('static',filename='js/test_profile.js') }}"></script>
+</html>

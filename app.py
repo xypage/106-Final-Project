@@ -73,8 +73,8 @@ follows = db.Table(
 
 class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String, unique=True, nullable=False)
     # usernames should be unique, but names aren't necessarily
+    username = db.Column(db.String, unique=True, nullable=False)
     name = db.Column(db.String, nullable=False)
     # Role is either teacher or student
     role = db.Column(db.String, nullable=False)
@@ -195,6 +195,22 @@ def get_following_posts():
     return jsonify(post_list)
 
 
+@app.route("/user/posts/<string:username>")
+def get_users_posts(username):
+    user =  User.query.filter_by(username=username).first()
+    user_id = user.id
+    users_posts = Post.query.filter_by(user_id=user_id).order_by(Post.timestamp.desc()).all()
+    post_list = []
+    for post in users_posts:
+        post_data = {
+            "content": post.content,
+            "timestamp": post.timestamp,
+            "username": user.username,
+            "name": user.name,
+        }
+        post_list.append(post_data)
+    return jsonify(post_list)
+
 ##################################################
 #         User Info Management (User View)       #
 ##################################################
@@ -244,10 +260,13 @@ def follow_user(user_id):
     user_to_follow = User.query.get(user_id)
     # check to make sure user exists
     if user_to_follow is not None:
-        current_user.followed.append(user_to_follow)
-        db.session.commit()
-        return "Successfully followed user", 200
-    return "User to unfollow is not found", 404
+        if user_to_follow not in current_user.followed:
+            current_user.followed.append(user_to_follow)
+            db.session.commit()
+            return "Successfully followed user", 200
+        else:
+            return "Already following user", 200
+    return "User to follow is not found", 404
 
 # route to get list of users that that the current user is following
 @app.route('/get_followed_users', methods=["GET"])
@@ -353,25 +372,27 @@ def viewProfile():
 
 @app.route("/user/<string:username>")
 def user_profile(username):
-    user_id = User.query.filter_by(username=username).first().id
+    user = User.query.filter_by(username=username).first()
     # get all the posts from this user
-    users_posts = Post.query.filter_by(user_id=user_id).order_by(Post.timestamp.desc()).all()
+    users_posts = Post.query.filter_by(user_id=user.id).order_by(Post.timestamp.desc()).all()
     post_list = []
     for post in users_posts:
-        user = User.query.filter_by(id=post.user_id).first()
-        post_data ={
+        post_data = {
             "content": post.content,
             "timestamp": post.timestamp
         }
         post_list.append(post_data)
 
-    return render_template("test_profile.html", post_list=post_list)
-
-    # Make sure they're authenticated first so you don't try to access anon user's username
-    # if current_user.is_authenticated and current_user.username == username:
-        # return "Your profile " + username
-    # else:
-        # return username + "'s profile"
+    user = {
+        "name": user.name,
+        "username": user.username, 
+        "user_id": user.id,
+        "followed": current_user.is_authenticated and user in current_user.followed,
+        "bio": user.bio
+    }
+    # Check if the profile is the profile of the current user
+    is_user = current_user.is_authenticated and current_user.username == username
+    return render_template("test_profile.html", post_list=post_list, user=user, is_user=is_user)
 
 
 

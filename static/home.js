@@ -38,9 +38,10 @@ $(document).ready(function () {
                     var headerContainer = document.createElement("div");
                     headerContainer.classList.add("headerContainer");
 
-                    var name = document.createElement("p");
+                    var name = document.createElement("a");
                     name.classList.add("name");
                     name.innerText = `${data[i].name} (${data[i].username})`;
+                    name.href = `/user/${data[i].username}`;
                     headerContainer.appendChild(name);
 
                     var timestamp = document.createElement("p");
@@ -122,9 +123,10 @@ function load_all_posts() {
                 var headerContainer = document.createElement("div");
                 headerContainer.classList.add("headerContainer");
 
-                var name = document.createElement("p");
+                var name = document.createElement("a");
                 name.classList.add("name");
                 name.innerText = `${data[i].name} (${data[i].username})`;
+                name.href = `/user/${data[i].username}`;
                 headerContainer.appendChild(name);
 
                 var timestamp = document.createElement("p");
@@ -176,9 +178,10 @@ function load_following_posts() {
                 var headerContainer = document.createElement("div");
                 headerContainer.classList.add("headerContainer");
 
-                var name = document.createElement("p");
+                var name = document.createElement("a");
                 name.classList.add("name");
                 name.innerText = `${data[i].name} (${data[i].username})`;
+                name.href = `/user/${data[i].username}`;
                 headerContainer.appendChild(name);
 
                 var timestamp = document.createElement("p");
@@ -209,8 +212,8 @@ function load_unfollowed_users() {
     xhttp.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
             var data = JSON.parse(this.responseText);
-            var user_list = document.getElementById('user_list');
-            user_list.innerHTML = "<h3>Unfollowed Users</h3>";
+            // var user_list = document.getElementById('user_list');
+            // user_list.innerHTML = "<h3>Unfollowed Users</h3>";
             for (var i = 0; i < data.length; i++) {
                 var user = document.createElement("div");
                 user.innerHTML = `<p>${data[i].name} (${data[i].username})</p>`;
