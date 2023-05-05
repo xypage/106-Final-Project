@@ -32,31 +32,31 @@ $(document).ready(function () {
                     var user_feed = document.getElementById("feed_contents");
 
                     for (var i = 0; i < data.length; i++) {
-                    var post = document.createElement("div");
-                    post.classList.add("post");
+                        var post = document.createElement("div");
+                        post.classList.add("post");
 
-                    var headerContainer = document.createElement("div");
-                    headerContainer.classList.add("headerContainer");
+                        var headerContainer = document.createElement("div");
+                        headerContainer.classList.add("headerContainer");
 
-                    var name = document.createElement("p");
-                    name.classList.add("name");
-                    name.innerText = `${data[i].name} (${data[i].username})`;
-                    headerContainer.appendChild(name);
+                        var name = document.createElement("p");
+                        name.classList.add("name");
+                        name.innerText = `${data[i].name} (${data[i].username})`;
+                        headerContainer.appendChild(name);
 
-                    var timestamp = document.createElement("p");
-                    timestamp.classList.add("timestamp");
-                    timestamp.innerText = data[i].timestamp;
-                    headerContainer.appendChild(timestamp);
+                        var timestamp = document.createElement("p");
+                        timestamp.classList.add("timestamp");
+                        timestamp.innerText = data[i].timestamp;
+                        headerContainer.appendChild(timestamp);
 
-                    var content = document.createElement("p");
-                    content.classList.add("content");
-                    content.innerText = data[i].content;
+                        var content = document.createElement("p");
+                        content.classList.add("content");
+                        content.innerText = data[i].content;
 
-                    post.appendChild(headerContainer);
-                    post.appendChild(content)
+                        post.appendChild(headerContainer);
+                        post.appendChild(content)
 
-                    user_feed.appendChild(post);
-            }
+                        user_feed.appendChild(post);
+                    }
 
                     // Clear the form for new post entry
                     document.getElementById("new_post_form").reset();
@@ -312,13 +312,13 @@ const globalFeedBut = document.querySelector('#global_feed');
 //change the button color once it's pressed but will change back once the other button is pressed
 
 personalFeedBut.addEventListener('click', () => {
-    personalFeedBut.style.backgroundColor = 'rgb(200, 47, 200)'
+    personalFeedBut.style.backgroundColor = 'rgb(192, 140, 164)'
     globalFeedBut.style.backgroundColor = '#fbeee0'
 
 })
 
 globalFeedBut.addEventListener('click', () => {
     personalFeedBut.style.backgroundColor = '#fbeee0'
-    globalFeedBut.style.backgroundColor = 'rgb(200, 47, 200)'
+    globalFeedBut.style.backgroundColor = 'rgb(192, 140, 164)'
 
 })
