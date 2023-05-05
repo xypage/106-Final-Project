@@ -80,6 +80,7 @@ class User(db.Model, UserMixin):
     role = db.Column(db.String, nullable=False)
     # Password is the hashed version of the user's password
     password = db.Column(db.String, nullable=False)
+    bio = db.Column(db.String)
     # Posts is a list of all the posts the user has made
     posts = db.relationship('Post', backref='user')
     # Follows is a list of all the users the user is following
@@ -94,6 +95,7 @@ class User(db.Model, UserMixin):
         self.name = name
         self.password = bcrypt.generate_password_hash(password)
         self.role = role
+        self.bio = "This user hasn't created their bio yet!"
 
     def check_password(self, password):
         # p("Passwords:", self.password, bcrypt.generate_password_hash(password))
