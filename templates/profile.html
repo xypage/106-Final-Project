@@ -24,6 +24,10 @@
         <div class="header">
             <div class="front">
                 <p id="current_user_name">PROILE:NAME</p>
+                <div id="current_user_feed">
+                <h3 id="current_user_feed_label"></h3>
+                <div id="current_user_ffeed_contents"></div>
+        </div>
                 
             </div>
             <!-- <div id="current_user_feed">
@@ -53,10 +57,6 @@
 
         </div>
         <p>Home</p>
-        <div id="current_user_feed">
-            <h3 id="current_user_feed_label"></h3>
-            <div id="current_user_ffeed_contents"></div>
-        </div>
     </body>
     <script src="{{url_for('static', filename='/profile.js')}}"></script>
 </html>
