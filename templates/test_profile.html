@@ -73,12 +73,18 @@
 		<div class="main-content">
 			<div class="user-info-container">
 				<h2 id="current_user_name">{{ user.name }}'s Profile</h2>
-                <div class="bio-container">
-                    <p class="bio">{{ user.bio }}</p>
-                    {% if user.is_current %}
-                        <button id="edit_bio">Edit bio</button>
-                    {% endif %}
-                </div>
+				<div class="info-container">
+					<div class="bio-container">
+						<p class="bio">{{ user.bio }}</p>
+						{% if user.is_current %}
+							<button id="edit_bio">Edit bio</button>
+						{% endif %}
+					</div>
+					<div class="follow-info-container">
+						<button id="following_button">Following</button>
+						<button id="followers_button">Followers</button>
+					</div>
+				</div>
 				{% if not user.is_current and not user.followed %}
 				<button id="follow_button">Follow {{ user.name }}</button>
 				<button id="unfollow_button" class="hidden">

@@ -8,8 +8,8 @@
 .header {
     width: 100%;
     height: 100vh;
-    background: rgb(210, 200, 173);
-    font-family: 'Times New Roman', Times, serif;
+    background: #000000;
+    font-family: 'Times New Roman', Times, serif;;
 }
 
 body {
@@ -19,11 +19,13 @@ body {
 .front {
     font-family: 'Times New Roman', Times, serif;
     color: rgb(200, 47, 200);
-    padding-left: 19%;
     padding-top: 2%;
     text-align: center;
     font-size: 50px;
     background-color: rgb(210, 200, 173);
+    width: calc(100% - 250px);
+    position: relative;
+    left: 250px;
 }
 
 .infoAboutUs {
@@ -50,8 +52,8 @@ body {
     top: 0;
     bottom: 0;
     padding: 20px 30px;
-    border-radius: 1em;
-    margin: 10px;
+    /* border-radius: 1em; */
+    /* margin: 10px; */
 }
 
 .logo {

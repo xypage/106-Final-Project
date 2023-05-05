@@ -34,14 +34,6 @@
     }
 }
 
-#global_feed {
-    background-color: rgb(192, 140, 164);
-}
-
-#feed_label {
-    color: transparent;
-}
-
 .post {
     display: flex;
     flex-direction: column;

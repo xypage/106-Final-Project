@@ -190,3 +190,38 @@ body {
 	flex-direction: row;
 	justify-content: space-between;
 }
+
+#edit_bio {
+	width: 15em;
+	height: 1.5em;
+}
+
+.screen_cover {
+	position: absolute;
+	z-index: 10;
+	height: 100vh;
+	width: 100vw;
+	background-color: rgba(0, 0, 0, 0.8);
+
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+.screen_cover h1 {
+	color: #FFF;
+}
+.popup a {
+	text-decoration: none;
+	color: #000;
+}
+
+table, td, th {
+	border: 1px solid black;
+}
+.follow_table {
+	background: #f9f9f9;
+	border-collapse: collapse;
+}
+.follow_table td {
+	padding: 5px;
+}
