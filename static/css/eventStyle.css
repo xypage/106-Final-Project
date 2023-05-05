@@ -3,25 +3,27 @@
     padding: 0px;
     box-sizing: border-box;
     font-family: 'Times New Roman', Times, serif;
-
-
 }
 
 .header {
     width: 100%;
     height: 100vh;
-    background: rgb(255, 255, 255);
+    background: rgb(210, 200, 173);
     font-family: 'Times New Roman', Times, serif;
+}
 
+body {
+    background-color: rgb(210, 200, 173);
 }
 
 .front {
     font-family: 'Times New Roman', Times, serif;
     color: rgb(200, 47, 200);
-    padding-left: 18%;
+    padding-left: 19%;
     padding-top: 2%;
     text-align: center;
     font-size: 50px;
+    background-color: rgb(210, 200, 173);
 }
 
 .infoAboutUs {
@@ -41,13 +43,15 @@
 
 .sidenav {
     width: 250px;
-    height: 100%;
+    height: 98%;
     background-image: linear-gradient(rgb(201, 150, 159), rgb(200, 47, 200), rgb(91, 9, 124));
     /* background:rgb(101, 196, 233); */
     position: fixed;
     top: 0;
     bottom: 0;
     padding: 20px 30px;
+    border-radius: 1em;
+    margin: 10px;
 }
 
 .logo {

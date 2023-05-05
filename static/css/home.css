@@ -35,7 +35,7 @@
 }
 
 #global_feed {
-    background-color: rgb(200, 47, 200);
+    background-color: rgb(192, 140, 164);
 }
 
 #feed_label {
@@ -55,17 +55,19 @@
     padding: 10px;
     padding-left: 1em;
     padding-right: 1em;
+    border-radius: 0.5em;
 }
 
 .headerContainer p {
     display: inline-block;
-    margin: 0;
+    margin: 5px;
 
 }
 
 .name {
     text-decoration: none;
     font-weight: bold;
+    color: rgb(192, 140, 164);
     font-size: 0.5em;
     color:  rgb(118, 26, 118);
 }
@@ -78,4 +80,8 @@
 .content {
     color: black;
     font-size: 0.5em;
+    margin-bottom: 20px;
+    margin-left: 50px;
+    margin-right: 50px;
+    margin-top: 10px;
 }
