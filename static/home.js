@@ -21,11 +21,42 @@ $(document).ready(function () {
             if (this.status == 200) {
                 if (globalFeed == true) {
                     // If succesful, append the new post to the page
-                    var post_html = JSON.parse(this.responseText);
-                    let user_feed = document.getElementById('feed_contents');
+                    // var post_html = JSON.parse(this.responseText);
+                    // let user_feed = document.getElementById('feed_contents');
                     // insertAdjacent("afterbegin", ...) inserts an element in front of the 
                     // current first child using the string passed as the html
-                    user_feed.insertAdjacentHTML("afterbegin", post_html);
+                    // user_feed.insertAdjacentHTML("afterbegin", post_html);
+                    clear_posts();
+                    var data = JSON.parse(this.responseText);
+                    document.getElementById("feed_label").innerText = "Global Feed";
+                    var user_feed = document.getElementById("feed_contents");
+
+                    for (var i = 0; i < data.length; i++) {
+                    var post = document.createElement("div");
+                    post.classList.add("post");
+
+                    var headerContainer = document.createElement("div");
+                    headerContainer.classList.add("headerContainer");
+
+                    var name = document.createElement("p");
+                    name.classList.add("name");
+                    name.innerText = `${data[i].name} (${data[i].username})`;
+                    headerContainer.appendChild(name);
+
+                    var timestamp = document.createElement("p");
+                    timestamp.classList.add("timestamp");
+                    timestamp.innerText = data[i].timestamp;
+                    headerContainer.appendChild(timestamp);
+
+                    var content = document.createElement("p");
+                    content.classList.add("content");
+                    content.innerText = data[i].content;
+
+                    post.appendChild(headerContainer);
+                    post.appendChild(content)
+
+                    user_feed.appendChild(post);
+            }
 
                     // Clear the form for new post entry
                     document.getElementById("new_post_form").reset();

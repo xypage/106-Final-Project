@@ -136,9 +136,24 @@ def new_post():
     db.session.add(new_post)
     db.session.commit()
 
+    all_posts = Post.query.order_by(Post.timestamp.desc()).all()
+    posts_data = []
+
+    for post in all_posts:
+        user = User.query.filter_by(id=post.user_id).first()
+        post_data = {
+            "content": post.content,
+            "timestamp": post.timestamp,
+            "username": user.username,
+            "name": user.name,
+        }
+        posts_data.append(post_data)
+
+    return jsonify(posts_data)
+
     # Render the new post HTML and return it
-    post_html = render_template_string('<div> class="post"><p>{{ content}}</p><p>{{ timestamp }}</p></div>', content=content, timestamp=new_post.timestamp)
-    return jsonify(post_html)
+    # post_html = render_template_string('<div> class="post"><p>{{ content}}</p><p>{{ timestamp }}</p></div>', content=content, timestamp=new_post.timestamp)
+    # return jsonify(post_html)
 
 # endpoint to get all posts from the database (global feed)
 @app.route('/get_all_posts', methods=["GET"])
