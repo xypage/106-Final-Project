@@ -6,6 +6,9 @@
         <meta http-equiv="X-UA=compatible" content="IE=edge">
         <title>HOME Page</title>
         <!-- <link rel = "stylesheet" href="/static/style.css"> -->
+        <script src="https://code.jquery.com/jquery-3.6.4.min.js"
+            integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
+
         <script src="https://kit.fontawesome.com/8e1cac8c45.js" crossorigin="anonymous"></script>
          <link
             rel="stylesheet"
@@ -20,9 +23,13 @@
 
         <div class="header">
             <div class="front">
-                <p>PROILE:NAME</p>
+                <p id="current_user_name">PROILE:NAME</p>
                 
             </div>
+            <!-- <div id="current_user_feed">
+                <h3 id="current_user_feed_label"></h3>
+                <div id="current_user_ffeed_contents"></div>
+            </div> -->
             
             
             <div class="sidenav">
@@ -46,6 +53,10 @@
 
         </div>
         <p>Home</p>
-    
+        <div id="current_user_feed">
+            <h3 id="current_user_feed_label"></h3>
+            <div id="current_user_ffeed_contents"></div>
+        </div>
     </body>
+    <script src="{{url_for('static', filename='/profile.js')}}"></script>
 </html>

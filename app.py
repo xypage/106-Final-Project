@@ -196,6 +196,35 @@ def get_following_posts():
 
 
 ##################################################
+#         User Info Management (User View)       #
+##################################################
+
+@app.route('/get_current_user_name', methods=["Get"])
+@login_required
+def get_current_user_name():
+    print(current_user.name)
+    return current_user.name
+
+@app.route('/get_current_user_posts', methods=["GET"])
+@login_required
+def get_current_user_posts():
+    current_user_posts = Post.query.filter_by(user_id=current_user.id).order_by(Post.timestamp.desc()).all()
+    post_list = []
+    for post in current_user_posts:
+        post_data = {
+            "content": post.content,
+            "timestamp": post.timestamp,
+            "username": current_user.username,
+            "name": current_user.name,
+        }
+        post_list.append(post_data)
+
+    print(post_list)
+    return jsonify(post_list)
+
+
+
+##################################################
 #         Follow Management (User View)          #
 ##################################################
 
@@ -316,6 +345,11 @@ def about():
 @app.route("/events")
 def events():
     return render_template("events.html")
+
+@app.route("/profile/")
+@login_required
+def viewProfile():
+    return render_template("profile.html")
 
 @app.route("/user/<string:username>")
 def user_profile(username):
