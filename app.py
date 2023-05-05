@@ -70,6 +70,12 @@ follows = db.Table(
     db.Column('follower_id', db.Integer, db.ForeignKey('user.id'), primary_key=True),
     db.Column('followed_id', db.Integer, db.ForeignKey('user.id'), primary_key=True)
 )
+# Association table for posts the user likes
+likes = db.Table(
+    'likes',
+    db.Column('liker_id', db.Integer, db.ForeignKey('user.id'), primary_key=True),
+    db.Column('post_id', db.Integer, db.ForeignKey('post.id'), primary_key=True)
+)
 
 class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
@@ -89,6 +95,11 @@ class User(db.Model, UserMixin):
         primaryjoin=(follows.c.follower_id==id),
         secondaryjoin=(follows.c.followed_id==id),
         backref=db.backref('followers', lazy='dynamic'), lazy='dynamic')
+    liked = db.relationship(
+        'Post', secondary=likes,
+        primaryjoin=(likes.c.liker_id==id),
+        secondaryjoin=(likes.c.post_id==id),
+        backref=db.backref('likes', lazy='dynamic'), lazy='dynamic')
 
     def __init__(self, username, name, password, role):
         self.username = username
@@ -171,6 +182,7 @@ def get_all_posts():
             "timestamp": post.timestamp,
             "username": user.username,
             "name": user.name,
+            "id": post.id
         }
         posts_data.append(post_data)
 
@@ -240,6 +252,23 @@ def get_current_user_posts():
     print(post_list)
     return jsonify(post_list)
 
+@app.route("/edit_bio", methods=["POST"])
+@login_required
+def edit_bio():
+    current_user.bio = request.get_json()["new_bio"]
+    db.session.commit()
+    return "Bio successfully updated", 200
+
+@app.route("/like/<int:post_id>", methods=["POST"])
+@login_required
+def like_post(post_id):
+    post_to_like = Post.query.get(post_id)
+    if post_to_like is not None:
+        current_user.liked.append(post_to_like)
+        db.session.commit()
+        return "Post successfully liked", 200
+    else:
+        return "Post not found", 404
 
 
 ##################################################
@@ -370,9 +399,11 @@ def events():
 @app.route("/profile/")
 @login_required
 def viewProfile():
-    return render_template("profile.html")
+    # return render_template("profile.html")
+    return redirect("/user/" + current_user.username)
 
 @app.route("/user/<string:username>")
+@login_required
 def user_profile(username):
     user = User.query.filter_by(username=username).first()
     # get all the posts from this user
@@ -390,11 +421,10 @@ def user_profile(username):
         "username": user.username, 
         "user_id": user.id,
         "followed": current_user.is_authenticated and user in current_user.followed,
-        "bio": user.bio
+        "bio": user.bio,
+        "is_current": current_user.is_authenticated and current_user.username == username
     }
-    # Check if the profile is the profile of the current user
-    is_user = current_user.is_authenticated and current_user.username == username
-    return render_template("test_profile.html", post_list=post_list, user=user, is_user=is_user)
+    return render_template("test_profile.html", post_list=post_list, user=user)
 
 
 

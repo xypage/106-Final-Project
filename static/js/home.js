@@ -117,8 +117,14 @@ function load_all_posts() {
             //     user_feed.appendChild(post);
             // }
             for (var i = 0; i < data.length; i++) {
+                let post_id = data[i].id;
                 var post = document.createElement("div");
+                
                 post.classList.add("post");
+                post.id = "post" + post_id;
+                post.onclick = () => {
+                    likePost(post_id)
+                };
 
                 var headerContainer = document.createElement("div");
                 headerContainer.classList.add("headerContainer");
@@ -243,8 +249,8 @@ function load_followed_users() {
     xhttp.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
             var data = JSON.parse(this.response);
-            var user_list = document.getElementById('following_list');
-            user_list.innerHTML = "<h3>Followed users</h3>";
+            // var user_list = document.getElementById('following_list');
+            // user_list.innerHTML = "<h3>Followed users</h3>";
             for (var i = 0; i < data.length; i++) {
                 var user = document.createElement("div")
                 user.innerHTML = `<p>${data[i].name} (${data[i].username})</p>`;
