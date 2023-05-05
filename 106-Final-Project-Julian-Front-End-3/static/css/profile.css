@@ -1,0 +1,255 @@
+
+ body {
+    font-family: Montserrat, sans-serif;
+    background: #000000;
+} 
+
+
+.cover-photo {
+    background: url(https://images.unsplash.com/photo-1540228232483-1b64a7024923?ixlib=rb-1.2.1&auto=format&fit=crop&w=967&q=80);
+    height: 300px;
+    width: 100%;
+    border-radius: 5px 5px 0 0;
+}
+
+.profile {
+    height: 20vw;
+    width: 20vw;
+    border-radius: 50%;
+    margin: 150px 0 0 -50vw;
+    border: 1px solid #1f1a32;
+    padding: 7px;
+    background: #292343;
+}
+
+.profile-name {
+    font-size: 50px;
+    font-weight: bold;
+    margin: 27px 0 0 -100px;
+}
+
+.about {
+    margin-top: 35px;
+    line-height: 25px;
+    font-size: 30px;
+    margin-bottom: 35px;
+    text-align: left;
+    margin-left: 5%;
+}
+
+button {
+    margin: 10px 0 40px 0;
+}
+
+.msg-btn,
+.follow-btn {
+    background: #03bfbc;
+    border: 1px solid #03bfbc;
+    padding: 10px 25px;
+    color: #231e39;
+    border-radius: 3px;
+    font-family: sans-serif;
+    cursor: pointer;
+}
+
+.follow-btn {
+    margin-left: 10px;
+    background: transparent;
+    color: #02899c;
+}
+
+.follow-btn:hover {
+    color: #231e39;
+    background: #03bfbc;
+    transition: .5s;
+}
+
+.container i {
+    padding-left: 100px;
+    font-size: 20px;
+    margin-bottom: 20px;
+    cursor: pointer;
+    transition: .5s;
+}
+
+.container i:hover {
+    color: #03bfbc;
+}
+.front-top{
+    font-size: 30px;
+    text-align: left;
+    /* align-content: normal; */
+    width: 1500px;
+    height:5px;
+    /* border: 1px solid black; */
+    margin: 10px left;
+    color:rgb(255, 255, 255);
+
+    background-image: linear-gradient(rgb(66, 8, 67), rgb(200, 47, 200), rgb(91, 9, 124));
+    /* background-size: */
+}
+* {
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+    font-family: 'Times New Roman', Times, serif;
+
+
+
+}
+
+/* .header {
+    width: 100%;
+    height: 100vh;
+    background: rgb(0, 0, 0);
+    font-family: 'Times New Roman', Times, serif;
+
+} */
+
+.front {
+    font-family: 'Times New Roman', Times, serif;
+    color: rgb(200, 47, 200);
+    padding-left: 18%;
+    padding-top: 2%;
+    text-align: center;
+    font-size: 50px;
+    background-color: rgb(0, 0, 0);
+}
+
+/* .infoAboutUs {
+    font-size: 30px;
+    color: black;
+} */
+
+.headers {
+    font-style: none;
+    font-family: 'Times New Roman', Times, serif;
+    color: #fff;
+    font-style: none;
+    font-weight: normal;
+    font-size: 23px;
+    align-items: center;
+}
+
+.sidenav {
+    width: 250px;
+    height: 100%;
+    background-image: linear-gradient(rgb(201, 150, 159), rgb(200, 47, 200), rgb(91, 9, 124));
+    /* background:rgb(101, 196, 233); */
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    padding: 20px 30px;
+}
+
+.logo {
+
+    display: block;
+    margin-bottom: 130px;
+
+}
+
+.logo-img {
+    width: 150px;
+
+}
+
+.navs {
+    list-style: none;
+    position: relative;
+
+}
+
+.navs li {
+    padding: 10px 0;
+}
+
+.navs li a {
+    color: #fff;
+    text-decoration: none;
+    padding: 10px 14px;
+    display: flex;
+    align-items: center;
+
+}
+
+.navs li a i {
+    font-size: 22px;
+    margin-right: 20px;
+}
+
+.active {
+    background: #fff;
+    width: 100%;
+    height: 47px;
+    position: absolute;
+    left: 0;
+    top: 2.6;
+    z-index: -1;
+    border-radius: 6px;
+    box-shadow: 0px 5px 10px rgba(255, 255, 255, 0.4);
+    display: none;
+    transition: 0.5s;
+}
+
+.navs li:hover a {
+    color: rgb(0, 0, 0);
+    transition: 0.3s;
+}
+
+.navs li:hover~.active {
+    display: block;
+}
+
+.navs li:nth-child(1):hover~.active {
+    top: 2.6%;
+}
+
+.navs li:nth-child(2):hover~.active {
+    top: 22.6%;
+}
+
+.navs li:nth-child(3):hover~.active {
+    top: 42.6%;
+}
+
+.navs li:nth-child(4):hover~.active {
+    top: 62.6%;
+}
+
+.navs li:nth-child(5):hover~.active {
+    top: 82.6%;
+}
+
+.contents {
+    color: #fff;
+    align-content: center;
+    
+}
+.infoAboutUs{
+    margin: 100px;
+    
+    color:#fff;
+    
+}
+.textbox{
+    /* background-color: rgb(105, 43, 43); */
+    /* font-size: 30px;*/
+    /* text-align: right;  */
+    /* align-content: normal; */
+    align-items: center;
+    /* width: 1500px; */
+    height:100px;
+
+    /* border: 1px solid black; */
+     margin: 10px right;
+    /* color:black;  */
+
+    background-image: linear-gradient(rgb(66, 8, 67), rgb(200, 47, 200), rgb(91, 9, 124));
+
+    /* background-size: */
+ 
+}
+.smalls{
+    font-size: 20px;
+}

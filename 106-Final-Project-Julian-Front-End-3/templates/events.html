@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name = "viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA=compatible" content="IE=edge">
+        <title>HOME Page</title>
+        <!-- <link rel = "stylesheet" href="/static/style.css"> -->
+        <script src="https://kit.fontawesome.com/8e1cac8c45.js" crossorigin="anonymous"></script>
+        <link rel = "stylesheet" href="static/css/eventStyle.css">
+    </head>
+    <body>
+        <!-- <p >HOME</p> -->
+
+        <div class="header">
+            <div class="sidenav">
+                <a href="#" class ="logo">
+                    <img src= "{{ url_for('static', filename='image/logo1.jpeg') }}" alt ="logo" class="logo-img">
+                    <div class="headers">
+                        <h1>TIGHT RIDES</h1>
+                    </div>
+                    
+                    
+                </a>
+                <ul class = "navs">
+                    <li><a href="/"><i class="fa-solid fa-house"></i></i></i><p>Home</p></a></li>
+                    <li><a href="/events"><i class="fa-solid fa-map-location-dot"></i><p>Events</p></a></li>
+                    <li><a href="/profile"><i class="fa-solid fa-user"></i><p>Profile</p></a></li>
+                    <li><a href="/aboutUs"><i class="fa-solid fa-sitemap"></i><p>About Us</p></a></li>
+                    <li><a href="/logout"><i class="fa-solid fa-right-from-bracket"></i><p>Signout</p></a></li>
+                    <div class = "active"></div>
+                </ul>
+            </div>
+            <div class="front">
+                <h1>Upcoming Events</h1>
+                
+                <div class="front-top">
+                    <br>
+                    <!-- <p>Save The Date!</p> -->
+                </div>
+                <br>
+                <p>Add the grid from lab 8 below</p>
+                
+               
+                
+
+                
+                <div id="current_user_feed">
+                <h3 id="current_user_feed_label"></h3>
+                <div id="current_user_ffeed_contents"></div>
+             </div>
+                
+            </div>
+        </div>
+        
+    </body>
+</html>

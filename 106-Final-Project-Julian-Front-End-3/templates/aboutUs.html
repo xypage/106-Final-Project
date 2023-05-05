@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name = "viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA=compatible" content="IE=edge">
+        <title>HOME Page</title>
+        <!-- <link rel = "stylesheet" href="/static/style.css"> -->
+        <script src="https://kit.fontawesome.com/8e1cac8c45.js" crossorigin="anonymous"></script>
+        <link
+            rel="stylesheet"
+            type="text/css"
+            href="{{ url_for('static',filename='css/aboutUs.css') }}"
+        />
+    </head>
+    <body>
+        <!-- <p >HOME</p> -->
+
+        <div class="header"> 
+            <div class="sidenav">
+                <a href="#" class ="logo">
+                    <img src= "{{ url_for('static', filename='image/logo1.jpeg') }}" alt ="logo" class="logo-img">
+                    <div class="headers">
+                        <h1>TIGHT RIDES</h1>
+                    </div>
+                    
+                    
+                </a>
+                <ul class = "navs">
+                    <li><a href="/"><i class="fa-solid fa-house"></i></i></i><p>Home</p></a></li>
+                    <li><a href="/events"><i class="fa-solid fa-map-location-dot"></i><p>Events</p></a></li>
+                    <li><a href="/profile"><i class="fa-solid fa-user"></i><p>Profile</p></a></li>
+                    <li><a href="/aboutUs"><i class="fa-solid fa-sitemap"></i><p>About Us</p></a></li>
+                    <li><a href="/logout"><i class="fa-solid fa-right-from-bracket"></i><p>Signout</p></a></li>
+                    <div class = "active"></div>
+                </ul>
+            </div>
+
+            <div class="front">
+                <p>ABOUT US</p>
+                <div class="infoAboutUs">
+                    <p >Welcome! We are Tight Rides! A collective car community page that aims to bring us gear heads together!
+                        We list all of our known car meets and events coming near you. We also encourage you to upload your own posts for everyone to see! 
+                        Keep the community thriving and pumping!
+                </p>
+                <br>
+                <img src="{{ url_for('static', filename='image/incar.jpeg') }}">
+                </div> 
+            </div>
+
+        </div>
+        <p>Home</p>
+    
+    </body>
+</html>
