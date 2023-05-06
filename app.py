@@ -85,6 +85,11 @@ likes = db.Table(
     db.Column("liker_id", db.Integer, db.ForeignKey("user.id"), primary_key=True),
     db.Column("post_id", db.Integer, db.ForeignKey("post.id"), primary_key=True),
 )
+attending = db.Table(
+    "attending",
+    db.Column("attending_id", db.Integer, db.ForeignKey("user.id")),
+    db.Column("event_id", db.Integer, db.ForeignKey("event.id")),
+)
 
 
 class User(db.Model, UserMixin):
@@ -116,6 +121,13 @@ class User(db.Model, UserMixin):
         backref=db.backref("likes", lazy="dynamic"),
         lazy="dynamic",
     )
+    # attending_events = db.relationship(
+    #     "Event",
+    #     secondary=attending,
+    #     primaryjoin=(attending.c.attending_id == id),
+    #     secondaryjoin=(attending.c.event_id == id),
+    #     backref=db.backref("attending", lazy="dynamic"),
+    # )
 
     def __init__(self, username, name, password, role):
         self.username = username
@@ -141,11 +153,36 @@ class Post(db.Model):
     privacy_setting = db.Column(db.String, nullable=False)
     comments = db.relationship("Comment", back_populates="parent_post")
 
+
 class Comment(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     contents = db.Column(db.String)
     parent_post_id = db.Column(db.Integer, db.ForeignKey("post.id"))
     parent_post = db.relationship("Post", back_populates="comments")
+
+
+class Event(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    # user_id is the id of the user hosting the event (foreign key)
+    user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
+    # Title is the name of the event
+    title = db.Column(db.String, nullable=False)
+    # description is the description of the event
+    description = db.Column(db.String, nullable=False)
+    # timestamp is the time the event was posted
+    timestamp = db.Column(db.DateTime, nullable=False)
+    # event time is when the event is happening
+    event_time = db.Column(db.DateTime, nullable=False)
+    # attendees = db.relationship(
+    #     "User", secondary=attending, backref=db.backref("attending", lazy="dynamic")
+    # )
+    attendees = db.relationship(
+        "User",
+        secondary=attending,
+        # primaryjoin=(attending.c.attending_id == db.ForeignKey("user.id")),
+        # secondaryjoin=(attending.c.event_id == id),
+        # backref=db.backref("attending", lazy="dynamic"),
+    )
 
 
 from random import randint
@@ -223,13 +260,143 @@ def load_data():
                 db.session.add(new_post)
                 db.session.commit()
 
+            event_length = randint(1, 5)
+            lorem_index = randint(0, len(lorem_text) - event_length)
+            event_text = (
+                ".".join(lorem_text[lorem_index : lorem_index + event_length]) + "."
+            )
+            event_time = datetime.now() + timedelta(
+                # From -30 to 30, so events can have passed already
+                days=randint(-30, 30),
+                hours=randint(0, 24),
+                minutes=randint(0, 60),
+                seconds=randint(0, 60),
+            )
+            user_event = Event(
+                user_id=user_id,
+                title=user.name + "'s Event",
+                description=event_text,
+                event_time=event_time,
+                timestamp=datetime.now(),
+            )
+            db.session.add(user_event)
+            db.session.commit()
+
+        # Iterate through again so they can attend events, needs to be a separate loop because events need to have been created already
+        for user_id in users:
+            user = User.query.get(user_id)
+            other_user_id = user_id
+            while other_user_id == user_id:
+                other_user_id = users[randint(0, len(users) - 1)]
+            other_user_event = Event.query.filter_by(user_id=other_user_id).first()
+            other_user_event.attendees.append(user)
+            db.session.commit()
+
 
 with app.app_context():
     pass
-    db.drop_all()
-    db.create_all()
-    load_data()
+    # db.drop_all()
+    # db.create_all()
+    # load_data()
 
+
+###################################################
+#         Event Management (User View)            #
+###################################################
+@app.route("/unattend/<int:event_id>", methods=["POST"])
+@login_required
+def unattend(event_id):
+    event = Event.query.get(event_id)
+    event.attendees.remove(current_user)
+    db.session.commit()
+    return "Successfully unattended"
+
+@app.route("/attend/<int:event_id>", methods=["POST"])
+@login_required
+def attend(event_id):
+    event = Event.query.get(event_id)
+    event.attendees.append(current_user)
+    db.session.commit()
+    return "Successfully attended"
+
+@app.route("/load_events")
+@login_required
+def load_events():
+    all_events = (
+        Event.query.filter(Event.event_time > datetime.now())
+        .order_by(Event.event_time.asc())
+        .all()
+    )
+    event_list = []
+    for event in all_events:
+        event_poster = User.query.get(event.user_id)
+        event_dict = {
+            "event_id": event.id,
+            "title": event.title,
+            "description": event.description,
+            "timestamp": event.timestamp,
+            "event_time": event.event_time,
+            "poster_id": event.user_id,
+            "poster_name": event_poster.name,
+            "poster_username": event_poster.username,
+            "attending": current_user in event.attendees,
+            "from_current": current_user.id == event.user_id
+        }
+        event_list.append(event_dict)
+    return render_template("event_list.html", event_list=event_list)
+
+@app.route("/attending_events")
+@login_required
+def attending_events():
+    all_events = (
+        Event.query.filter(Event.event_time > datetime.now())
+        .order_by(Event.event_time.asc())
+        .all()
+    )
+    event_list = []
+    for event in all_events:
+        if(current_user in event.attendees):
+            event_poster = User.query.get(event.user_id)
+            event_dict = {
+                "event_id": event.id,
+                "title": event.title,
+                "description": event.description,
+                "timestamp": event.timestamp,
+                "event_time": event.event_time,
+                "poster_id": event.user_id,
+                "poster_name": event_poster.name,
+                "poster_username": event_poster.username,
+                "attending": current_user in event.attendees,
+                "from_current": current_user.id == event.user_id
+            }
+            event_list.append(event_dict)
+    return render_template("event_list.html", event_list=event_list)
+
+@app.route("/new_event", methods=["POST"])
+@login_required
+def new_event():
+    data = request.get_json()
+    p(data)
+    user_event = Event(
+        user_id=current_user.id,
+        title=data["title"],
+        description=data["description"],
+        event_time=datetime.fromisoformat(data["date"]),
+        timestamp=datetime.now(),
+    )
+    db.session.add(user_event)
+    db.session.commit()
+    return "a"
+
+@app.route("/delete_event/<int:event_id>", methods=["DELETE"])
+@login_required
+def delete_event(event_id):
+    event = Event.query.get(event_id)
+    if(event != None and event.user_id == current_user.id):
+        db.session.delete(event)
+        db.session.commit()
+        return "Successfully removed"
+    return "Failed to remove"
 
 ##################################################
 #         Post Management (User View)            #
@@ -424,6 +591,7 @@ def get_followed_users(username):
     ]
     return jsonify(user_data)
 
+
 @app.route("/user/<string:username>/followed_by", methods=["GET"])
 @login_required
 def get_followers(username):
@@ -448,6 +616,7 @@ def unfollow_user(user_id):
         db.session.commit()
         return "Successfully unfollowed user", 200
     return "User to unfollow is not found", 404
+
 
 # route for removing a follower from the current user
 @app.route("/remove_follower/<int:user_id>", methods=["POST"])
@@ -538,8 +707,30 @@ def about():
 
 
 @app.route("/events")
+@login_required
 def events():
-    return render_template("events.html")
+    all_events = (
+        Event.query.filter(Event.event_time > datetime.now())
+        .order_by(Event.event_time.asc())
+        .all()
+    )
+    event_list = []
+    for event in all_events:
+        event_poster = User.query.get(event.user_id)
+        event_dict = {
+            "event_id": event.id,
+            "title": event.title,
+            "description": event.description,
+            "timestamp": event.timestamp,
+            "event_time": event.event_time,
+            "poster_id": event.user_id,
+            "poster_name": event_poster.name,
+            "poster_username": event_poster.username,
+            "attending": current_user in event.attendees,
+            "from_current": current_user.id == event.user_id
+        }
+        event_list.append(event_dict)
+    return render_template("events.html", event_list=event_list)
 
 
 @app.route("/profile/")
@@ -573,16 +764,6 @@ def user_profile(username):
     }
     return render_template("test_profile.html", post_list=post_list, user=user)
 
-
-# @app.route("/user/<string:username>/following")
-# @login_required
-# def user_following(username):
-#     following_user = User.query.filter_by(username=username).first()
-#     followed_users = [
-#         {"name": user.name, "username": user.username, "id": user.id}
-#         for user in following_user.followed
-#     ]
-#     return jsonify(followed_users)
 
 
 if __name__ == "__main__":
