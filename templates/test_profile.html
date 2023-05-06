@@ -72,30 +72,49 @@
 		</div>
 		<div class="main-content">
 			<div class="user-info-container">
-				<h2 id="current_user_name">{{ user.name }}'s Profile</h2>
+				<img
+						src="{{ url_for('static', filename='image/blank-profile-picture.webp') }}"
+						alt="profile-img"
+						class="logo-img"
+						class="profile-img"
+				/>
 				<div class="info-container">
+						<h2 id="current_user_name">{{ user.name }}'s Profile 
+							<!-- edit Bio Button if current user -->
+							{% if user.is_current %}
+								<div class="edit-button">
+            						<button id="edit_bio">Edit bio</button>
+        						</div>
+							{% endif %}
+							<!-- Follow or UnFollow Button if not the current user -->
+							{% if not user.is_current and not user.followed %}
+								<div class="follow-button">
+            						<button id="follow_button">Follow {{ user.name }}</button>
+        						</div>
+								<div class="unfollow-button">
+            						<button id="unfollow_button" class="hidden">
+										Unfollow {{ user.name }}
+									</button>
+        						</div>
+							{% elif not user.is_current %}
+								<div class="follow-button">
+            						<button id="follow_button" class="hidden">
+										Follow {{ user.name }}
+									</button>
+        						</div>
+								<div class="unfollow-button">
+            						<button id="unfollow_button">Unfollow {{ user.name }}</button>
+        						</div>
+							{% endif %}
+						</h2>
 					<div class="bio-container">
 						<p class="bio">{{ user.bio }}</p>
-						{% if user.is_current %}
-							<button id="edit_bio">Edit bio</button>
-						{% endif %}
 					</div>
 					<div class="follow-info-container">
 						<button id="following_button">Following</button>
 						<button id="followers_button">Followers</button>
 					</div>
 				</div>
-				{% if not user.is_current and not user.followed %}
-				<button id="follow_button">Follow {{ user.name }}</button>
-				<button id="unfollow_button" class="hidden">
-					Unollow {{ user.name }}
-				</button>
-				{% elif not user.is_current %}
-				<button id="follow_button" class="hidden">
-					Follow {{ user.name }}
-				</button>
-				<button id="unfollow_button">Unollow {{ user.name }}</button>
-				{% endif %}
 			</div>
 			{% for post in post_list %}
 			<div class="post">

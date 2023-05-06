@@ -61,7 +61,7 @@
     font-weight: bold;
     color: rgb(192, 140, 164);
     font-size: 0.5em;
-    color:  rgb(118, 26, 118);
+    color: rgb(118, 26, 118);
 }
 
 .timestamp {
@@ -76,4 +76,12 @@
     margin-left: 50px;
     margin-right: 50px;
     margin-top: 10px;
+}
+
+#global_feed {
+    background-color: rgb(192, 140, 164);
+}
+
+#new_post_form {
+    margin-left: 60px;
 }
