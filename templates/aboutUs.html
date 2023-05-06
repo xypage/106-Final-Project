@@ -10,7 +10,7 @@
         <link
             rel="stylesheet"
             type="text/css"
-            href="{{ url_for('static',filename='css/eventStyle.css') }}"
+            href="{{ url_for('static',filename='css/aboutUs.css') }}"
         />
     </head>
     <body>
@@ -39,8 +39,12 @@
             <div class="front">
                 <p>ABOUT US</p>
                 <div class="infoAboutUs">
-                    <p >We are a collective car community app who hopes to being everyone together 
+                    <p id = "description">Welcome! We are Tight Rides! A collective car community page that aims to bring us gear heads together!
+                        We list all of our known car meets and events coming near you. We also encourage you to upload your own posts for everyone to see! 
+                        Keep the community thriving and pumping! 
                 </p> 
+                <br>
+                <img src="{{ url_for('static', filename='image/incar.jpeg') }}">
                 </div> 
             </div>
 

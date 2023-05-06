@@ -160,6 +160,7 @@ body {
 	font-weight: bold;
 	font-size: 25px;
 	color: rgb(118, 26, 118);
+	margin-right: 5px;
 }
 
 .timestamp {
@@ -190,13 +191,6 @@ body {
 	gap: 0.5rem;
 	margin-left: 5%;
 }
-
-.name-follow-container {
-	display: inline-block;
-	/* vertical-align: middle; */
-	margin-right: 1rem;
-}
-
 
 .bio-container {
 	width: 600px;
