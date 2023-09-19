@@ -1,0 +1,83 @@
+body {
+    background-color: rgba(104, 102, 104, 0.223);
+    text-align: center;
+    display: grid;
+    grid-template-rows: repeat(3, 1fr);
+    justify-items: center;
+    align-items: center;
+}
+
+.form-wrapper {
+    width: 75vw;
+}
+
+.square {
+    width: 25vw;
+    height: 60vh;
+    border-radius: 10%;
+    background-color: whitesmoke;
+    padding: 50px;
+    margin: 20px;
+}
+
+.form {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    align-items: center;
+    column-gap: 2ch;
+    row-gap: 2ch;
+
+}
+
+.form>label {
+    justify-self: end;
+}
+
+.form>input {
+    justify-self: stretch;
+}
+
+.form>* {
+    margin-top: 10px;
+}
+
+
+
+#submit {
+    grid-column: 1 / span 2;
+    padding: 1.5%;
+    width: 24.5vw;
+    position: relative;
+    color: white;
+    font-size: medium;
+    background-image: linear-gradient(rgb(201, 150, 159), rgb(200, 47, 200), rgb(91, 9, 124));
+}
+
+.login,
+.register {
+    padding-bottom: 23%;
+}
+
+#username {
+    border: none;
+    border-bottom: 2px solid black;
+    padding: 2%;
+    padding-bottom: 3%;
+    background-color: whitesmoke;
+}
+
+#password {
+    border: none;
+    border-bottom: 2px solid black;
+    padding: 2%;
+    padding-bottom: 3%;
+    background-color: whitesmoke;
+}
+
+#name {
+    border: none;
+    border-bottom: 2px solid black;
+    padding: 2%;
+    padding-bottom: 3%;
+    background-color: whitesmoke;
+}

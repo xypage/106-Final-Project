@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta http-equiv="X-UA=compatible" content="IE=edge" />
+		<title>{{ user.name }}'s Profile</title>
+		<!-- <link rel = "stylesheet" href="/static/style.css"> -->
+		<script
+			src="https://code.jquery.com/jquery-3.6.4.min.js"
+			integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8="
+			crossorigin="anonymous"
+		></script>
+
+		<script
+			src="https://kit.fontawesome.com/8e1cac8c45.js"
+			crossorigin="anonymous"
+		></script>
+		<link
+			rel="stylesheet"
+			type="text/css"
+			href="{{ url_for('static',filename='css/test_profile.css') }}"
+		/>
+	</head>
+	<body>
+		<div class="header">
+			<div class="sidenav">
+				<a href="/" class="logo">
+					<img
+						src="{{ url_for('static', filename='image/logo1.jpeg') }}"
+						alt="logo"
+						class="logo-img"
+					/>
+					<div class="headers">
+						<h1>TIGHT RIDES</h1>
+					</div>
+				</a>
+				<ul class="navs">
+					<li>
+						<a href="/"
+							><i class="fa-solid fa-house"></i>
+							<p>Home</p></a
+						>
+					</li>
+					<li>
+						<a href="/events"
+							><i class="fa-solid fa-map-location-dot"></i>
+							<p>Events</p></a
+						>
+					</li>
+					<li>
+						<a href="/profile"
+							><i class="fa-solid fa-user"></i>
+							<p>Profile</p></a
+						>
+					</li>
+					<li>
+						<a href="/aboutUs"
+							><i class="fa-solid fa-sitemap"></i>
+							<p>About Us</p></a
+						>
+					</li>
+					<li>
+						<a href="/logout"
+							><i class="fa-solid fa-right-from-bracket"></i>
+							<p>Signout</p></a
+						>
+					</li>
+					<div class="active"></div>
+				</ul>
+			</div>
+		</div>
+		<div class="main-content">
+			<div class="user-info-container">
+				<img
+					src="{{ url_for('static', filename='image/blank-profile-picture.webp') }}"
+					alt="profile-img"
+					class="logo-img"
+					class="profile-img"
+				/>
+				<div class="info-container">
+					<h2 id="current_user_name">
+						{{ user.name }}'s Profile
+						<!-- edit Bio Button if current user -->
+						{% if user.is_current %}
+						<div class="edit-button">
+							<button id="edit_bio">Edit bio</button>
+						</div>
+						{% endif %}
+						<!-- Follow or UnFollow Button if not the current user -->
+						{% if not user.is_current and not user.followed %}
+						<div class="follow-button">
+							<button id="follow_button">Follow {{ user.name }}</button>
+						</div>
+						<div class="unfollow-button">
+							<button id="unfollow_button" class="hidden">
+								Unfollow {{ user.name }}
+							</button>
+						</div>
+						{% elif not user.is_current %}
+						<div class="follow-button">
+							<button id="follow_button" class="hidden">
+								Follow {{ user.name }}
+							</button>
+						</div>
+						<div class="unfollow-button">
+							<button id="unfollow_button">Unfollow {{ user.name }}</button>
+						</div>
+						{% endif %}
+					</h2>
+					<div class="bio-container">
+						<p class="bio">{{ user.bio }}</p>
+					</div>
+					<div class="follow-info-container">
+						<button id="following_button">Following</button>
+						<button id="followers_button">Followers</button>
+					</div>
+				</div>
+			</div>
+			{% for post in post_list %}
+			<div class="post">
+				<div class="headerContainer">
+					<a href="/user/{{ user.username }}" class="name"
+						>{{ user.name }} ({{ user.username }})
+					</a>
+					<p class="timestamp">{{ post.timestamp }}</p>
+				</div>
+				<div class="content">{{ post.content }}</div>
+			</div>
+			{% endfor %}
+		</div>
+	</body>
+	<script type="text/javascript">
+		var user = {{ user|tojson }};
+	</script>
+	<script src="{{ url_for('static',filename='js/test_profile.js') }}"></script>
+</html>

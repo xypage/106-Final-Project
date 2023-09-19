@@ -1,0 +1,32 @@
+{% for event in event_list %}
+<div class="event" id="event_{{event.event_id}}">
+	<div class="event-header">
+		<h4 class="event_title">{{ event.title }}</h4>
+		<p class="event_time">{{event.event_time}}</p>
+		<a href="/user/{{event.poster_username}}" class="event_poster">
+			{{event.poster_name}} ({{event.poster_username}})
+		</a>
+	</div>
+	<p class="event_description">{{event.description}}</p>
+	{% if event.attending %}
+	<button
+		class="attend_toggle"
+		id="toggle_for_{{ event.event_id }}"
+		onclick="unattend({{ event.event_id }})"
+	>
+		Cancel RSVP
+	</button>
+	{% else %}
+	<button
+		class="attend_toggle"
+		id="toggle_for_{{ event.event_id }}"
+		onclick="attend({{ event.event_id }})"
+	>
+		RSVP
+	</button>
+	{% endif %}
+	{% if event.from_current %}
+	<button id="delete_{{event.event_id}}" onclick="delete_event({{event.event_id}})">Delete event</button>
+	{% endif %}
+</div>
+{% endfor %}

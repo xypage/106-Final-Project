@@ -1,0 +1,292 @@
+* {
+	margin: 0px;
+	padding: 0px;
+	box-sizing: border-box;
+	font-family: "Times New Roman", Times, serif;
+}
+
+body {
+	display: flex;
+	flex-direction: row;
+}
+
+.header {
+	width: 250px;
+	height: 100vh;
+	background: rgb(255, 255, 255);
+	font-family: "Times New Roman", Times, serif;
+}
+
+.infoAboutUs {
+	font-size: 30px;
+	color: black;
+}
+
+.headers {
+	font-style: none;
+	font-family: "Times New Roman", Times, serif;
+	color: #fff;
+	font-style: none;
+	font-weight: normal;
+	font-size: 23px;
+	align-items: center;
+}
+
+.sidenav {
+	width: 250px;
+	height: 100%;
+	background-image: linear-gradient(rgb(201, 150, 159),
+			rgb(200, 47, 200),
+			rgb(91, 9, 124));
+	/* background:rgb(101, 196, 233); */
+	position: fixed;
+	/* top: 0;
+    bottom: 0; */
+	padding: 20px 30px;
+}
+
+.logo {
+	display: block;
+	margin-bottom: 130px;
+	/* margin-left: 50px; */
+}
+
+.logo-img {
+	width: 150px;
+}
+
+.navs {
+	list-style: none;
+	position: relative;
+}
+
+.navs li {
+	padding: 10px 0;
+}
+
+.navs li a {
+	color: #fff;
+	text-decoration: none;
+	padding: 10px 14px;
+	display: flex;
+	align-items: center;
+}
+
+.navs li a i {
+	font-size: 22px;
+	margin-right: 20px;
+}
+
+.active {
+	background: #fff;
+	width: 100%;
+	height: 47px;
+	position: absolute;
+	left: 0;
+	top: 2.6;
+	z-index: -1;
+	border-radius: 6px;
+	box-shadow: 0px 5px 10px rgba(255, 255, 255, 0.4);
+	display: none;
+	transition: 0.5s;
+}
+
+.navs li:hover a {
+	color: rgb(0, 0, 0);
+	transition: 0.3s;
+}
+
+.navs li:hover~.active {
+	display: block;
+}
+
+.navs li:nth-child(1):hover~.active {
+	top: 2.6%;
+}
+
+.navs li:nth-child(2):hover~.active {
+	top: 22.6%;
+}
+
+.navs li:nth-child(3):hover~.active {
+	top: 42.6%;
+}
+
+.navs li:nth-child(4):hover~.active {
+	top: 62.6%;
+}
+
+.navs li:nth-child(5):hover~.active {
+	top: 82.6%;
+}
+
+.contents {
+	color: #fff;
+	align-content: center;
+}
+
+.main-content {
+	width: calc(100% - 250px);
+	background-color: rgb(210, 200, 173);
+}
+
+.post {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: flex-start;
+	margin-bottom: 20px;
+	border: 1px solid #ccc;
+	background-color: #f9f9f9;
+	border: 1px solid #ddd;
+	margin: 10px;
+	padding: 10px;
+	padding-left: 1em;
+	padding-right: 1em;
+	border-radius: 25px;
+}
+
+.headerContainer {
+	display: flex;
+	flex-direction: row;
+}
+
+.post>.content {
+	margin: 5px;
+}
+
+.name {
+	text-decoration: none;
+	font-weight: bold;
+	font-size: 25px;
+	color: rgb(118, 26, 118);
+	margin-right: 5px;
+}
+
+.timestamp {
+	color: #ccc;
+	font-size: 25px;
+}
+
+.content {
+	color: black;
+	font-size: 25px;
+}
+
+.hidden {
+	display: none;
+}
+
+.user-info-container {
+	width: calc(100% - 20px);
+	margin: 10px;
+	padding: 20px;
+	display: flex;
+	background-color: #f9f9f9;
+}
+
+.info-container {
+	display: flex;
+	flex-direction: column;
+	gap: 0.5rem;
+	margin-left: 5%;
+}
+
+.bio-container {
+	width: 600px;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+}
+
+#edit_bio {
+	width: 15em;
+	height: 1.5em;
+}
+
+.screen_cover {
+	position: absolute;
+	z-index: 10;
+	height: 100vh;
+	width: 100vw;
+	background-color: rgba(0, 0, 0, 0.8);
+
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.screen_cover h1 {
+	color: #FFF;
+}
+
+.popup a {
+	text-decoration: none;
+	color: #000;
+}
+
+table,
+td,
+th {
+	border: 1px solid black;
+}
+
+.follow_table {
+	background: #f9f9f9;
+	border-collapse: collapse;
+}
+
+.follow_table td {
+	padding: 5px;
+}
+
+/* div of the buttons */
+.edit-button,
+.follow-button,
+.unfollow-button {
+	margin: 10px;
+	display: inline-block;
+}
+
+/* the style of the actual button */
+#edit_bio,
+#follow_button,
+#unfollow_button {
+	background-color: #fbeee0;
+	border: 2px solid #422800;
+	border-radius: 30px;
+	box-shadow: #422800 4px 4px 0 0;
+	color: #422800;
+	cursor: pointer;
+	font-weight: 600;
+	font-size: 15px;
+	padding: 0 18px;
+	line-height: 20px;
+	text-align: center;
+	text-decoration: none;
+	user-select: none;
+	-webkit-user-select: none;
+	touch-action: manipulation;
+	width: 100%;
+}
+
+#following_button,
+#followers_button {
+	margin: 5px;
+	background-color: #fbeee0;
+	border: 2px solid #422800;
+	/* border-radius: 30px; */
+	box-shadow: #422800 4px 4px 0 0;
+	color: #422800;
+	cursor: pointer;
+	font-weight: 600;
+	font-size: 15px;
+	padding: 0 18px;
+	line-height: 20px;
+	text-align: center;
+	text-decoration: none;
+	user-select: none;
+	-webkit-user-select: none;
+	touch-action: manipulation;
+	width: 20%;
+}
